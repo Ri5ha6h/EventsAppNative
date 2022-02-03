@@ -2,28 +2,38 @@
   "expo": {
     "name": "events-app",
     "slug": "events-app",
+    "description": "An events app to explore events.",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "scheme": "events-app",
+    "privacy": "public",
+    "icon": "./assets/event.png",
+    "facebookScheme": "fb641827533804814",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/event.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rm.eventsapp",
+      "buildNumber": "1.0.0",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/event.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.rm.eventsapp",
+      "useNextNotificationsApi": true,
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 1,
+      "permissions": ["VIBRATE"]
     },
     "web": {
       "favicon": "./assets/favicon.png"

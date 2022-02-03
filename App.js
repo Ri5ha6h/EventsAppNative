@@ -1,20 +1,48 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import MainStackNavigation from './screens/MainStackNavigation';
+import {
+  createStore,
+  combineReducers,
+  applyMiddleware,
+} from 'redux';
+import ReduxThunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import categoryReducer from './store/reducer/category';
+import authReducer from './store/reducer/auth';
+import { SSRProvider } from '@react-aria/ssr';
+import * as WebBrowser from 'expo-web-browser';
+import * as Notifications from 'expo-notifications';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
 });
+
+WebBrowser.maybeCompleteAuthSession();
+
+const rootReducer = combineReducers({
+  category: categoryReducer,
+  auth: authReducer,
+});
+
+const store = createStore(
+  rootReducer,
+  applyMiddleware(ReduxThunk)
+);
+
+
+const App = () => {
+  
+  return (
+    <Provider store={store}>
+      <SSRProvider>
+        <MainStackNavigation />
+      </SSRProvider>
+    </Provider>
+  );
+};
+
+export default App;
